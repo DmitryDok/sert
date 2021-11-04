@@ -13,8 +13,13 @@ provider "aws" {
   region = "eu-central-1"
 }
 
+resource "aws_key_pair" "deploer_key" {
+  key_name = "deploer"
+  public_key = file("~/.ssh/id_rsa.pub")
+}
+
 resource "aws_instance" "my-machine" {
   ami = var.ami
   instance_type = var.instance_type
-  key_name = file("~/.ssh/id_rsa")
+  key_name = aws_key_pair.deploer_key.key_name
 }
