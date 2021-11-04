@@ -1,4 +1,13 @@
 pipeline {
+    agent { any }
+    stages {
+        stage('') {
+            steps {
+            }
+        }
+    }
+}
+pipeline {
   agent any
   stages {
     stage('Git code') {
