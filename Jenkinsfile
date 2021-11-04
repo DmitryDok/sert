@@ -1,13 +1,4 @@
 pipeline {
-    agent { any }
-    stages {
-        stage('') {
-            steps {
-            }
-        }
-    }
-}
-pipeline {
   agent any
   stages {
     stage('TF Init&Plan') {
