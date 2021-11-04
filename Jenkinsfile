@@ -10,11 +10,6 @@ pipeline {
 pipeline {
   agent any
   stages {
-    stage('Git code') {
-      steps {
-        git 'https://github.com/DmitryDok/sert.git'
-      }
-    }
     stage('TF Init&Plan') {
       steps {
         sh 'terraform init'
