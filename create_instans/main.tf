@@ -9,8 +9,9 @@ terraform {
   }
 }
 
-metadata = {
-    ssh-keys = "extor:${file("~.ssh/id_rsa.pub")}"
+provider "aws" {
+  region = "eu-central-1"
+}
 
 resource "aws_instance" "my-machine" {
   ami = var.ami
