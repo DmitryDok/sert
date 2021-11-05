@@ -16,7 +16,12 @@ pipeline {
         sh 'terraform apply -auto-approve'
       }
     }
-    stage('Connections') {
+    stage('Pause') {
+      steps {
+        sh 'sleep 30'
+      }
+    }
+    stage('Ansible build') {
       steps {
         sh 'ssh ubuntu@${machine_ip}'
       }

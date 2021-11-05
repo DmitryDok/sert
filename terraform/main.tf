@@ -1,5 +1,9 @@
-data "aws_caller_identity" "current" {}
-
+output "build_ip" {
+  value = aws_instance.build.*.public_ip
+}
+output "prod_ip" {
+  value = aws_instance.prod.*.public_ip
+}
 terraform {
   required_providers {
     aws = {
@@ -15,9 +19,13 @@ resource "aws_key_pair" "deploer_key" {
   key_name = "deploer"
   public_key = file("~/.ssh/id_rsa.pub")
 }
-resource "aws_instance" "my-machine" {
+resource "aws_instance" "build" {
   ami = var.ami
   instance_type = var.instance_type
   key_name = aws_key_pair.deploer_key.key_name
 }
-
+resource "aws_instance" "prod" {
+  ami = var.ami
+  instance_type = var.instance_type
+  key_name = aws_key_pair.deploer_key.key_name
+}
