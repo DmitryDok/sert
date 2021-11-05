@@ -4,6 +4,7 @@ pipeline {
             args '-v /root/.ssh/:/root/.ssh/ -v /var/run/docker.sock:/var/run/docker.sock -u root'
         }
     }
+
   stages {
     stage('TF Init&Plan') {
       steps {
