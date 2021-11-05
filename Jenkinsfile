@@ -5,15 +5,20 @@ pipeline {
         }
     }
   stages {
-    stage('TF Init&Plan') {
+    stage('Terraform Init&Plan') {
       steps {
         sh 'terraform init'
         sh 'terraform plan'
       }
     }
-    stage('TF Apply') {
+    stage('Terraform Apply') {
       steps {
         sh 'terraform apply -auto-approve'
+      }
+    }
+    stage('Connections') {
+      steps {
+        sh 'ssh ubuntu@${machine_ip}'
       }
     }
   }

@@ -20,3 +20,4 @@ resource "aws_instance" "my-machine" {
   instance_type = var.instance_type
   key_name = aws_key_pair.deploer_key.key_name
 }
+
