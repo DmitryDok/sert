@@ -9,10 +9,6 @@ terraform {
   }
 }
 
-provider "aws" {
-  region = "eu-central-1"
-}
-
 resource "aws_key_pair" "deploer_key" {
   key_name = "deploer"
   public_key = file("~/.ssh/id_rsa.pub")
