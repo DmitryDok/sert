@@ -1,5 +1,9 @@
 pipeline {
-  agent any
+  agent {
+        dockerfile {
+            args '-v ~/.ssh/:~/.ssh/ -v /var/run/docker.sock:/var/run/docker.sock -u root'
+        }
+    }
   stages {
     stage('TF Init&Plan') {
       steps {
