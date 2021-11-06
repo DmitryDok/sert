@@ -24,8 +24,7 @@ resource "aws_instance" "build" {
   instance_type = var.instance_type
   key_name = aws_key_pair.deploer_key.key_name
   provisioner "local-exec" {
-    command = "echo [build] >> ./hosts"
-    command = "echo ${aws_instance.build.public_ip} >> ./hosts"
+    command = "echo [build] >> ./hosts && echo ${aws_instance.build.public_ip} >> ./hosts"
   }
 }
 resource "aws_instance" "prod" {
@@ -33,7 +32,6 @@ resource "aws_instance" "prod" {
   instance_type = var.instance_type
   key_name = aws_key_pair.deploer_key.key_name
   provisioner "local-exec" {
-    command = "echo [prod] >> ./hosts"
-    command = "echo ${aws_instance.prod.public_ip} >> ./hosts"
+    command = "echo [prod] >> ./hosts && echo ${aws_instance.prod.public_ip} >> ./hosts"
   }
 }
