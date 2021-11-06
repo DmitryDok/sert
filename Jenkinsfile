@@ -21,9 +21,9 @@ pipeline {
         sh 'sleep 30'
       }
     }
-    stage('Ansible build') {
+    stage('Ansible') {
       steps {
-        sh 'ssh ubuntu@${machine_ip}'
+        sh 'ansible-playbook ./ansible/boxfuse.yml -i ./ansible/hosts'
       }
     }
   }
