@@ -7,6 +7,7 @@
 - name: pull an image
   docker_image:
     name: dmitrydok/tomcat:latest
+    source: pull
 - name: Create a data container
   docker_container:
     name: prodtomcat
