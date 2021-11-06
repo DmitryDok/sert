@@ -1,5 +1,5 @@
 - name: build boxfuse
-  hosts: builder
+  hosts: build
   remote_user: ubuntu
   become: yes
   become_user: root
@@ -19,9 +19,15 @@
       shell: mvn package
       args:
         chdir: /home/boxfuse
+    - name: Create a data container
+      docker_container:
+        name: tomcat_cont
+        image: tomcat:alpine
+    - name: Copy build to container
+      shell: docker cp /home/boxfuse/target/hello-1.0.war tomcat_cont:/usr/local/tomcat/webapps/hello-1.0.war
     - name: PUT build to bucket
       aws_s3:
-        bucket: mybacket1.dmitry-test.com
+        bucket: project.dmitrydok.com
         object: hello-1.0.war
         src: /home/boxfuse/target/hello-1.0.war
         mode: put
