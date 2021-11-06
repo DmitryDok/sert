@@ -3,10 +3,9 @@
   remote_user: ubuntu
   become: yes
   become_user: root
-
   tasks:
     - name: Ensure package is present
-      apt: name={{item}} state=present
+      apt: name={{item}} state=present update_cache=yes
       with_items:
         - git
         - default-jdk
