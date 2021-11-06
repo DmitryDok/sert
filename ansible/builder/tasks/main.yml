@@ -1,49 +1,42 @@
 ---
 # tasks file for builder
 - name: Ensure package is present
-  apt: name={{item}} state=present
+  apt: name={{item}} state=present update_cache=yes
   with_items:
     - git
     - default-jdk
     - maven
-    - docker.io
-
+    - python3-pip
+- name: pip install docker
+  pip: name=docker
 - name: create directory
   file: path=/home/boxfuse state=directory
-
 - name: clone repository
   git: repo=https://github.com/boxfuse/boxfuse-sample-java-war-hello.git dest=/home/boxfuse
-
 - name: build package
   shell: mvn package
   args:
     chdir: /home/boxfuse
-
 - name: pull an image
   docker_image:
-    name: tomcat:alpine
-
+    name: tomcat/tomcat:alpine
 - name: Create a data container
   docker_container:
     name: tomcat_cont
-    image: tomcat
-
+    image: tomcat:alpine
 - name: Copy build to container
   shell: docker cp /home/boxfuse/target/hello-1.0.war tomcat_cont:/usr/local/tomcat/webapps/hello-1.0.war
-
 - name: Log into DockerHub
   docker_login:
     username: dmitrydok
-    password: DoktOrD1
+    password: 1qaz2wsx3edc
     email: doktord1@yandex.ru
-
 - name: Tag and push to docker hub
   docker_image:
-    name: tomcat
+    name: tomcat:alpine
     repository: dmitrydok/tomcat
     tag: latest
     push: yes
-
 - name: Log out of DockerHub
   docker_login:
     state: absent
