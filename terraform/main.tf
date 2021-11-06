@@ -23,13 +23,16 @@ resource "aws_instance" "build" {
   ami = var.ami
   instance_type = var.instance_type
   key_name = aws_key_pair.deploer_key.key_name
+  provisioner "local-exec" {
+    command = "echo ${aws_instance.build.public_ip} > ./hosts"
+  }
+
 }
 resource "aws_instance" "prod" {
   ami = var.ami
   instance_type = var.instance_type
   key_name = aws_key_pair.deploer_key.key_name
-}
-provisioner "local-exec" {
-  command = "echo ${aws_instance.build.public_ip} > ./hosts"
-  command = "echo ${aws_instance.prod.public_ip} > ./hosts"
+  provisioner "local-exec" {
+    command = "echo ${aws_instance.prod.public_ip} >> ./hosts"
+  }
 }
