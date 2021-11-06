@@ -1,35 +1,16 @@
-- name: build boxfuse
+---
+- name: builder
   hosts: build
   remote_user: ubuntu
   become: yes
   become_user: root
-  tasks:
-    - name: Ensure package is present
-      apt: name={{item}} state=present update_cache=yes
-      with_items:
-        - git
-        - default-jdk
-        - maven
-        - python3-pip
-    - name: pip install docker
-      pip: name=docker
-    - name: create directory
-      file: path=/home/boxfuse state=directory
-    - name: clone repository
-      git: repo=https://github.com/boxfuse/boxfuse-sample-java-war-hello.git dest=/home/boxfuse
-    - name: build package
-      shell: mvn package
-      args:
-        chdir: /home/boxfuse
-    - name: Create a data container
-      docker_container:
-        name: tomcat_cont
-        image: tomcat:alpine
-    - name: Copy build to container
-      shell: docker cp /home/boxfuse/target/hello-1.0.war tomcat_cont:/usr/local/tomcat/webapps/hello-1.0.war
-    - name: Tag and push to repositories
-      docker_image:
-        name: tomcat
-        repository: public.ecr.aws/m7y1g2j2/dmitrydok/tomcat
-        tag: latest
-        push: yes
+  roles:
+    - builder
+
+- name: prodakshen build
+  hosts: prod
+  remote_user: ubuntu
+  become: yes
+  become_user: root
+  roles:
+    - prod
