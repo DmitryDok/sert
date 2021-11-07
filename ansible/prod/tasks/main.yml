@@ -15,7 +15,8 @@
   docker_container:
     name: prodtomcat
     image: tomcat:alpine
-    volumes: /home/boxfuse:/usr/local/tomcat/webapps
+    volumes:
+      - /home/boxfuse/:/usr/local/tomcat/webapps/
 - name: Start container
   docker_container:
     name: prodtomcat
