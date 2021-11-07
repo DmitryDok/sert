@@ -52,7 +52,8 @@ resource "aws_instance" "prod" {
   ami = var.ami
   instance_type = var.instance_type
   key_name = aws_key_pair.deploer_key.key_name
-  vpc_security_group_ids = [aws_security_group.ssh_allow.id],[aws_security_group.tomcat_allow.id]
+  vpc_security_group_ids = [aws_security_group.ssh_allow.id]
+  vpc_security_group_ids = [aws_security_group.tomcat_allow.id]
   provisioner "local-exec" {
     command = "echo [prod] >> ./ansible/hosts && echo ${aws_instance.prod.public_ip} >> ./ansible/hosts"
   }
