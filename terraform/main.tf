@@ -49,7 +49,7 @@ resource "aws_security_group" "tomcat_allow" {
     to_port     = 22
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
-    }
+    },
     {
     from_port   = 8080
     to_port     = 8080
