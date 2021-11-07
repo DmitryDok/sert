@@ -6,10 +6,6 @@
     - git
     - default-jdk
     - maven
-    - docker.io
-    - python3-pip
-- name: pip install docker
-  pip: name=docker
 - name: create directory
   file: path=/home/boxfuse state=directory
 - name: clone repository
@@ -18,24 +14,8 @@
   shell: mvn package
   args:
     chdir: /home/boxfuse
-- name: Log into DockerHub
-  docker_login:
-    username: dmitrydok
-    password: 1qaz2wsx3edc
-    email: doktord1@yandex.ru
-- name: Create a data container
-  docker_container:
-    name: tomcat_cont
-    image: tomcat
-- name: Copy build to container
-  shell: docker cp /home/boxfuse/target/hello-1.0.war tomcat_cont:/usr/local/tomcat/webapps/hello-1.0.war
-- name: Tag and push to docker hub
-  docker_image:
-    name: tomcat
-    repository: dmitrydok/tomcat
-    push: yes
-    source: local
-- name: Log out of DockerHub
-  docker_login:
-    state: absent
-    email: doktord1@yandex.ru
+- name: Get file from build
+  fetch:
+    src: /home/boxfuse/target/hello-1.0.war
+    dest: hello-1.0.war
+    flat: yes

@@ -1,16 +1,21 @@
 ---
 # tasks file for prod
 - name: Ensure package is present
-  apt: name={{item}} state=present update_cache=yes
-  with_items:
-    - docker.io
-    - python3-pip
+  apt: name=python3-pip state=present update_cache=yes
 - name: pip install docker
   pip: name=docker
+- name: create directory
+  file: path=/home/boxfuse state=directory
+- name: Send file to prod
+  copy:
+    src: hello-1.0.war
+    dest: /home/boxfuse
+    follow: yes
 - name: Create a data container
   docker_container:
     name: prodtomcat
-    image: dmitrydok/tomcat
+    image: tomcat:alpine
+    volumes: /home/boxfuse:/usr/local/tomcat/webapps
 - name: Start container
   docker_container:
     name: prodtomcat
