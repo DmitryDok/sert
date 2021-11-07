@@ -20,7 +20,7 @@ resource "aws_key_pair" "deploer_key" {
   public_key = file("~/.ssh/id_rsa.pub")
 }
 resource "aws_security_group" "ssh_allow" {
-  name        = "ssh_allow"
+  name        = "ssh_allow_sg"
   description = "Allow SSH"
   ingress {
     from_port   = 22
@@ -30,7 +30,7 @@ resource "aws_security_group" "ssh_allow" {
   }
 }
 resource "aws_security_group" "tomcat_allow" {
-  name        = "ssh_allow"
+  name        = "tomcat_allow_sg"
   description = "Allow SSH"
   ingress {
     from_port   = 22
