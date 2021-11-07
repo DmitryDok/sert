@@ -30,12 +30,12 @@
 - name: Create a data container
   docker_container:
     name: tomcat_cont
-    image: tomcat
+    image: tomcat:alpine
 - name: Copy build to container
   shell: docker cp /home/boxfuse/target/hello-1.0.war tomcat_cont:/usr/local/tomcat/webapps/hello-1.0.war
 - name: Tag and push to docker hub
   docker_image:
-    name: tomcat
+    name: tomcat:alpine
     repository: dmitrydok/tomcat:latest
     push: yes
     source: local
