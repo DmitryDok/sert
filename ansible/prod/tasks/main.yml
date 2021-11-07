@@ -1,13 +1,20 @@
 ---
 # tasks file for prod
 - name: Ensure package is present
-  apt: name=python3-pip state=present update_cache=yes
-- name: pip install docker
-  pip: name=docker
+  apt: name=docker.io state=present update_cache=yes
+- name: Log into DockerHub
+  docker_login:
+    username: dmitrydok
+    password: 1qaz2wsx3edc
+    email: doktord1@yandex.ru
 - name: pull an image
   docker_image:
-    name: dmitrydok/tomcat:latest
+    name: dmitrydok/tomcat
     source: pull
+- name: Log out of DockerHub
+  docker_login:
+    state: absent
+    email: doktord1@yandex.ru
 - name: Create a data container
   docker_container:
     name: prodtomcat

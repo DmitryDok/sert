@@ -6,9 +6,7 @@
     - git
     - default-jdk
     - maven
-    - python3-pip
-- name: pip install docker
-  pip: name=docker
+    - docker.io
 - name: create directory
   file: path=/home/boxfuse state=directory
 - name: clone repository
