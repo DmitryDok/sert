@@ -23,20 +23,16 @@
     username: dmitrydok
     password: 1qaz2wsx3edc
     email: doktord1@yandex.ru
-- name: pull an image
-  docker_image:
-    name: tomcat:alpine
-    source: pull
 - name: Create a data container
   docker_container:
     name: tomcat_cont
-    image: tomcat:alpine
+    image: tomcat
 - name: Copy build to container
   shell: docker cp /home/boxfuse/target/hello-1.0.war tomcat_cont:/usr/local/tomcat/webapps/hello-1.0.war
 - name: Tag and push to docker hub
   docker_image:
-    name: tomcat:alpine
-    repository: dmitrydok/tomcat:latest
+    name: tomcat
+    repository: dmitrydok/tomcat
     push: yes
     source: local
 - name: Log out of DockerHub

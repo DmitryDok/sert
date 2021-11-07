@@ -7,19 +7,6 @@
     - python3-pip
 - name: pip install docker
   pip: name=docker
-- name: Log into DockerHub
-  docker_login:
-    username: dmitrydok
-    password: 1qaz2wsx3edc
-    email: doktord1@yandex.ru
-- name: pull an image
-  docker_image:
-    name: dmitrydok/tomcat
-    source: pull
-- name: Log out of DockerHub
-  docker_login:
-    state: absent
-    email: doktord1@yandex.ru
 - name: Create a data container
   docker_container:
     name: prodtomcat
