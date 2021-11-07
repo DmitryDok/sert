@@ -18,7 +18,7 @@
 - name: Create a data container
   docker_container:
     name: prodtomcat
-    image: tomcat
+    image: dmitrydok/tomcat
 - name: Start container
   docker_container:
     name: prodtomcat

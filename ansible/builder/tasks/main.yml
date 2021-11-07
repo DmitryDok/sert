@@ -15,30 +15,24 @@
   shell: mvn package
   args:
     chdir: /home/boxfuse
-- name: copy Dockerfile
-  copy:
-    src: Dockerfile
-    dest: /home/Dockerfile
-- name: build container image
-  docker_image:
-    name: tomcat_img
-    build:
-      path: /home
-    source: build
-- name: Create a data container
-  docker_container:
-    name: tomcat_cont
-    image: tomcat_img
-- name: Copy build to container
-  shell: docker cp /home/boxfuse/target/hello-1.0.war tomcat_cont:/usr/local/tomcat/webapps/hello-1.0.war
 - name: Log into DockerHub
   docker_login:
     username: dmitrydok
     password: 1qaz2wsx3edc
     email: doktord1@yandex.ru
+- name: pull an image
+  docker_image:
+    name: tomcat:alpine
+    source: pull
+- name: Create a data container
+  docker_container:
+    name: tomcat_cont
+    image: tomcat
+- name: Copy build to container
+  shell: docker cp /home/boxfuse/target/hello-1.0.war tomcat_cont:/usr/local/tomcat/webapps/hello-1.0.war
 - name: Tag and push to docker hub
   docker_image:
-    name: tomcat_img:latest
+    name: tomcat
     repository: dmitrydok/tomcat:latest
     push: yes
     source: local
