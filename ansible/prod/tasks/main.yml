@@ -17,9 +17,5 @@
     image: tomcat:alpine
     volumes:
       - "/home/boxfuse:/usr/local/tomcat/webapps"
-- name: Start container
-  docker_container:
-    name: prodtomcat
-    state: started
     ports:
-     - "8080:8080"
+      - "8080:8080"
